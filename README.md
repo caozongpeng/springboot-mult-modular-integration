@@ -7,3 +7,12 @@
 * 日志: Logback
 * 配置文件：Properties、YAML
 * 其他：lombok
+
+
+
+
+
+
+
+### Swagger的启用和禁用
+在application.yml中修改swagger.disabled即可，true表示启用Swagger，false表示禁用Swagger。在项目启动后可查看Swagger的状态。
