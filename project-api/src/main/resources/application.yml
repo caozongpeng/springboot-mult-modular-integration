@@ -26,17 +26,17 @@ spring:
   # 静态资源配置
   resources:
     # Thymeleaf
-    static-locations: classpath:/META-INF/resources/, classpath:/META-INF/resources/webjars/, classpath:/static/
+    # static-locations: classpath:/META-INF/resources/, classpath:/META-INF/resources/webjars/, classpath:/static/
     # JSP
-    # static-locations: classpath:/META-INF/resources/, classpath:/META-INF/resources/webjars/
+    static-locations: classpath:/META-INF/resources/, classpath:/META-INF/resources/webjars/
   # Thymeleaf配置
-  thymeleaf:
-    cache: false
+  #thymeleaf:
+    #cache: false
   # JSP配置
-#  mvc:
-#    view:
-#      suffix: .jsp
-#      prefix: /WEB-INF/pages/
+  mvc:
+    view:
+      suffix: .jsp
+      prefix: /WEB-INF/pages/
 
 # MyBatis配置
 mybatis:

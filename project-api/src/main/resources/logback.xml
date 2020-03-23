@@ -15,10 +15,10 @@
     <!-- 线上环境（日期分割日志文件） -->
     <appender name="PROD"
               class="ch.qos.logback.core.rolling.RollingFileAppender">
-        <File>logs/project.log</File>
+        <File>logs/codes.log</File>
         <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
             <!-- 文件名配置(cg-2018.03-12.0.log) -->
-            <fileNamePattern>/logs/project-%d.%i.log</fileNamePattern>
+            <fileNamePattern>/logs/codes-%d.%i.log</fileNamePattern>
             <!-- 日志文件保存期限（单位天） -->
             <maxHistory>30</maxHistory>
             <timeBasedFileNamingAndTriggeringPolicy  class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
