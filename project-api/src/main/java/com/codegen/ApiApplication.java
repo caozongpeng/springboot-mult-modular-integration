@@ -10,7 +10,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
  * @date 2020/2/4 14:49
  */
 @SpringBootApplication
-@MapperScan("com.tz.dao")
+@MapperScan("com.codegen.dao")
 public class ApiApplication {
     public static void main(String[] args) {
         SpringApplication.run(ApiApplication.class);

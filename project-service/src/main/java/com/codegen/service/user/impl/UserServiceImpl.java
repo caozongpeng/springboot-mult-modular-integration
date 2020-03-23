@@ -1,19 +1,12 @@
 package com.codegen.service.user.impl;
-
-
-import com.codegen.core.constants.Constants;
-import com.codegen.core.exception.BusinessException;
-import com.codegen.core.model.Page;
-import com.codegen.dao.user.TUserMapper;
-import com.codegen.dao.user.model.TUser;
-import com.codegen.dao.user.req.UserReq;
-import com.codegen.dao.user.req.UserSaveReq;
+import com.codegen.dao.user.UserMapper;
+import com.codegen.dao.user.model.User;
+import com.codegen.dao.user.model.UserExample;
 import com.codegen.service.user.UserService;
-import org.apache.commons.lang3.StringUtils;
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -25,55 +18,43 @@ import java.util.List;
 public class UserServiceImpl implements UserService {
 
     @Autowired
-    private TUserMapper userMapper;
+    private UserMapper userMapper;
 
     @Override
-    public Page<TUser> findPage(UserReq req) {
-        Page<TUser> page = new Page<>();
-        // 如果存在页码，则查询总数
-        if (req.getPageIndex() != null) {
-            int total = userMapper.countBySelective(req);
-            page.setPageIndex(req.getPageIndex());
-            page.setPageSize(req.getPageSize());
-            page.setTotal(total);
-        }
-        // 查询数据
-        List<TUser> userList = userMapper.selectBySelective(req);
-        page.setResult(userList);
-        return page;
+    public int create(User user) {
+        Date now = new Date();
+        user.setCreateTime(now);
+        user.setUpdateTime(now);
+        user.setIsDelete(Boolean.FALSE);
+        return userMapper.insertSelective(user);
     }
 
     @Override
-    public TUser findById(Integer id) {
+    public List<User> find(User user) {
+        UserExample exam = new UserExample();
+        UserExample.Criteria criteria = exam.createCriteria();
+        if (user.getIsDelete() != null) {
+            criteria.andIsDeleteEqualTo(user.getIsDelete());
+        }
+        return userMapper.selectByExample(exam);
+    }
+
+    @Override
+    public User findById(Integer id) {
         return userMapper.selectByPrimaryKey(id);
     }
 
     @Override
-    public TUser create(UserSaveReq req) {
-        if (req == null) throw new BusinessException("非法操作");
-        if (StringUtils.isBlank(req.getUsername())) throw new BusinessException("用户名不能为空");
-        if (StringUtils.isBlank(req.getPassword())) throw new BusinessException("密码不能为空");
-        TUser user = new TUser();
-        BeanUtils.copyProperties(req, user);
-        int resultNum = userMapper.insertSelective(user);
-        if (resultNum == 0)
-            throw new BusinessException(Constants.Status.CREATE_FAILURE);
-        return user;
+    public void updateById(User user) {
+        user.setUpdateTime(new Date());
+        userMapper.updateByPrimaryKeySelective(user);
     }
 
     @Override
     public void deleteById(Integer id) {
-        TUser user = findById(id);
-        if (user == null) throw new BusinessException(Constants.Status.DATA_EMPTY);
-        int resultNum = userMapper.deleteByPrimaryKey(id);
-        if (resultNum == 0) throw new BusinessException(Constants.Status.DELETE_FAILURE);
-    }
-
-    @Override
-    public void updateById(UserSaveReq req) {
-        TUser user = new TUser();
-        BeanUtils.copyProperties(req, user);
-        int resultNum = userMapper.updateByPrimaryKeySelective(user);
-        if(resultNum == 0) throw new BusinessException(Constants.Status.UPDATE_FAILURE);
+        User user = new User();
+        user.setId(id);
+        user.setIsDelete(Boolean.TRUE);
+        this.updateById(user);
     }
 }

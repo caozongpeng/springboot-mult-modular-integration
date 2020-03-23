@@ -1,52 +1,47 @@
 package com.codegen.service.user;
 
-import com.codegen.core.model.Page;
-import com.codegen.dao.user.model.TUser;
-import com.codegen.dao.user.req.UserReq;
-import com.codegen.dao.user.req.UserSaveReq;
-
+import com.codegen.dao.user.model.User;
+import java.util.List;
 
 /**
- * user业务接口定义
+ * 示例Service定义
  * @author KyrieCao
- * @date 2020/02/04 14:59
+ * @date 2020/3/14 11:21
  */
 public interface UserService {
 
     /**
-     * 用户分页列表
-     * @param req       请求对象
-     * @return Page<TUser>
-     * @author KyrieCao
-     * @date 2020/2/4 16:52
-     */
-    Page<TUser> findPage(UserReq req);
-
-    /**
-     * 根据ID查询
-     * @author KyrieCao
-     * @date 2020/02/04 14:59
-     */
-    TUser findById(Integer id);
-
-    /**
      * 创建
-     * @author KyrieCao
-     * @date 2020/02/04 14:59
+     * @author Java助手
+     * @date 2020/03/22 11:28
      */
-    TUser create(UserSaveReq req);
+    int create(User user);
 
     /**
-     * 根据ID更新
-     * @author KyrieCao
-     * @date 2020/02/04 14:59
+     * 查询
+     * @author Java助手
+     * @date 2020/03/22 11:28
      */
-    void updateById(UserSaveReq req);
+    List<User> find(User user);
 
     /**
-     * 根据ID删除
-     * @author KyrieCao
-     * @date 2020/02/04 14:59
+     * 主键查询
+     * @author Java助手
+     * @date 2020/03/22 11:28
+     */
+    User findById(Integer id);
+
+    /**
+     * 主键更新
+     * @author Java助手
+     * @date 2020/03/22 11:28
+     */
+    void updateById(User user);
+
+    /**
+     * 主键删除
+     * @author Java助手
+     * @date 2020/03/22 11:28
      */
     void deleteById(Integer id);
 }
