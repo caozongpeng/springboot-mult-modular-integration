@@ -43,7 +43,6 @@
         </dependency>
 
         <!-- Swagger -->
-        <!-- swagger -->
         <dependency>
             <groupId>io.springfox</groupId>
             <artifactId>springfox-swagger2</artifactId>
@@ -109,27 +108,27 @@
         <dependencies>
             <dependency>
                 <groupId>com.codegen</groupId>
-                <artifactId>project-dao</artifactId>
+                <artifactId>codegen-dao</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>
                 <groupId>com.codegen</groupId>
-                <artifactId>project-service</artifactId>
+                <artifactId>codegen-service</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>
                 <groupId>com.codegen</groupId>
-                <artifactId>project-core</artifactId>
+                <artifactId>codegen-core</artifactId>
                 <version>${project.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
 
     <modules>
-        <module>project-core</module>
-        <module>project-dao</module>
-        <module>project-service</module>
-        <module>project-api</module>
+        <module>codegen-core</module>
+        <module>codegen-dao</module>
+        <module>codegen-service</module>
+        <module>codegen-api</module>
     </modules>
 
 </project>
