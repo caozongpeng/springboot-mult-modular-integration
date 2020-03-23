@@ -2,18 +2,18 @@ package com.codegen.api.user;
 
 import com.codegen.api.BaseController;
 import com.codegen.core.model.ApiResponse;
-import com.codegen.core.model.Page;
-import com.codegen.dao.user.model.TUser;
-import com.codegen.dao.user.req.UserReq;
-import com.codegen.dao.user.req.UserSaveReq;
+import com.codegen.dao.user.model.User;
 import com.codegen.service.user.UserService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
+
+import java.util.List;
 
 /**
- * 用户接口
+ * 示例Controller
  * @author KyrieCao
  * @date 2020/2/4 14:53
  */
@@ -26,72 +26,64 @@ public class UserController extends BaseController {
     private UserService userService;
 
     /**
-     * 用户分页列表
-     * @param req       请求对象
-     * @return ApiResponse<Page<TUser>>
+     * 用户管理
      * @author KyrieCao
-     * @date 2020/2/4 16:56
+     * @date 2020/3/14 11:42
      */
-    @ApiOperation("用户分页列表")
-    @PostMapping("/list")
-    public ApiResponse<Page<TUser>> findPage(@RequestBody UserReq req) {
-        Page<TUser> users = userService.findPage(req);
-        return new ApiResponse<Page<TUser>>().success(users);
-    }
-
-    /**
-     * 根据ID查询用户
-     * @param id        用户id
-     * @return ApiResponse<TUser>
-     * @author KyrieCao
-     * @date 2020/2/4 15:25
-     */
-    @ApiOperation("查询单个用户")
-    @GetMapping("/{id}")
-    public ApiResponse<TUser> findById(@PathVariable Integer id) {
-        TUser user = userService.findById(id);
-        return new ApiResponse<TUser>().success(user);
+    @GetMapping("/manage")
+    @ApiOperation("用户管理页面")
+    public ModelAndView list() {
+        ModelAndView mav = new ModelAndView("user/manage");
+        User req = new User();
+        req.setIsDelete(Boolean.FALSE);
+        List<User> users = userService.find(req);
+        mav.addObject("userList", users);
+        return mav;
     }
 
     /**
      * 创建用户
-     * @param req       用户请求对象
-     * @return ApiResponse<TUser>
      * @author KyrieCao
-     * @date 2020/2/4 15:56
+     * @date 2020/3/14 11:43
      */
-    @ApiOperation("创建用户")
     @PostMapping("/create")
-    public ApiResponse<TUser> create(@RequestBody UserSaveReq req) {
-        TUser user = userService.create(req);
-        return new ApiResponse<TUser>().success(user);
+    @ApiOperation("创建用户")
+    public ApiResponse<User> create(User user) {
+        return ApiResponse.success(userService.create(user));
     }
 
     /**
-     * 根据ID删除用户
-     * @param id        用户id
-     * @return ApiResponse<?>
+     * 通过id查询用户
      * @author KyrieCao
-     * @date 2020/2/4 16:11
+     * @date 2020/3/14 21:36
      */
-    @ApiOperation("删除单个用户")
+    @GetMapping("/{id}")
+    @ApiOperation("根据ID查询")
+    public ApiResponse<User> finById(@PathVariable Integer id) {
+        return ApiResponse.success(userService.findById(id));
+    }
+
+    /**
+     * 修改用户
+     * @author KyrieCao
+     * @date 2020/3/14 11:44
+     */
+    @PostMapping("/updateById")
+    @ApiOperation("根据ID修改")
+    public ApiResponse<User> updateById(User user) {
+        userService.updateById(user);
+        return ApiResponse.success(null);
+    }
+
+    /**
+     * 用户删除
+     * @author KyrieCao
+     * @date 2020/3/14 11:45
+     */
     @GetMapping("/delete/{id}")
-    public ApiResponse<?> deleteById(@PathVariable Integer id) {
+    @ApiOperation("根据ID删除")
+    public ApiResponse<?> delete(@PathVariable Integer id) {
         userService.deleteById(id);
-        return new ApiResponse<>().success();
-    }
-
-    /**
-     * 根据ID更新用户
-     * @param req           请求对象
-     * @return ApiResponse<?>
-     * @author KyrieCao
-     * @date 2020/2/4 16:18
-     */
-    @ApiOperation("更新用户")
-    @PostMapping("/update")
-    public ApiResponse<?> updateById(@RequestBody UserSaveReq req) {
-        userService.updateById(req);
-        return new ApiResponse<>().success();
+        return ApiResponse.success(null);
     }
 }

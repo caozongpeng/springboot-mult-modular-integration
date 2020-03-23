@@ -21,19 +21,18 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
  */
 @Configuration
 @EnableSwagger2
-@ConditionalOnProperty(name = "swagger.disabled", havingValue = "false")
 public class SwaggerConfig {
 
-    @Value("${swagger.host}")
+    @Value("${swagger.host:}")
     private String host;
 
-    @Value("${swagger.title}")
+    @Value("${swagger.title:接口文档}")
     private String title;
 
-    @Value("${swagger.description}")
+    @Value("${swagger.description:}")
     private String description;
 
-    @Value("${project.version}")
+    @Value("${project.version:}")
     private String version;
 
     @Bean
