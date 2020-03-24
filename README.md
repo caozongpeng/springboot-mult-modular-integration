@@ -103,6 +103,19 @@ BaseTest：位于codegen-server下的test目录下的com.codes.service包
 ---
 
 ### 注意
-由于在多模块工程中，只能通过 boot-run 或打成 war 包后运行成功才能访问jsp页面，而在 IDEA 内通过main run 或 debug 都不能访问 jsp 资源。
-解决办法: 在 IDEA Edit configurations -> Environment 下的 `working directory` 设置为 `$MODULE_WORKING_DIR$` 才行。
+由于在多模块工程中，直接运行不能访问jsp页面。
+解决办法 codegen-api模块下pom.xml添加下面代码即可
+```xml
+<build>
+  <resources>
+    <!-- 打包时将jsp文件拷贝到META-INF目录下-->
+    <resource>
+      <!-- 指定resources插件处理哪个目录下的资源文件 -->
+      <directory>src/main/webapp</directory>
+      <!-- 注意必须要放在此目录下才能被访问到-->
+      <targetPath>META-INF/resources</targetPath>
+    </resource>
+  </resources>
+</build>
+```
 
