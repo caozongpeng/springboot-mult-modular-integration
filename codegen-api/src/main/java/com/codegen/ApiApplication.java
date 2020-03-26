@@ -4,17 +4,22 @@ import lombok.extern.slf4j.Slf4j;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.builder.SpringApplicationBuilder;
+import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.core.env.Environment;
 
 /**
  * springboot启动类
+ * 打war包需要继承 SpringBootServletInitializer 重写 configure 方法
+ *
  * @author KyrieCao
  * @date 2020/2/4 14:49
  */
 @Slf4j
 @SpringBootApplication
 @MapperScan("com.codegen.dao")
+//public class ApiApplication extends SpringBootServletInitializer {
 public class ApiApplication {
     public static void main(String[] args) {
         ConfigurableApplicationContext context = SpringApplication.run(ApiApplication.class);
@@ -29,4 +34,9 @@ public class ApiApplication {
         log.info("Startup complete ...");
         log.info("====================================================================");
     }
+
+    /*@Override
+    protected SpringApplicationBuilder configure(SpringApplicationBuilder builder) {
+        return builder.sources(ApiApplication.class);
+    }*/
 }

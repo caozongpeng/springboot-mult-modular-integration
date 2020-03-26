@@ -118,4 +118,63 @@ BaseTest：位于codegen-server下的test目录下的com.codes.service包
   </resources>
 </build>
 ```
+---
 
+### 打war包配置
+pom.xml修改
+```xml
+<!--打war包-->
+<packaging>war</packaging>
+
+<!-- Spring Boot -->
+<dependency>
+  <groupId>org.springframework.boot</groupId>
+  <artifactId>spring-boot-starter-web</artifactId>
+  <!--打war包排队内置tomcat-->
+  <exclusions>
+	<exclusion>
+	  <groupId>org.springframework.boot</groupId>
+	  <artifactId>spring-boot-starter-tomcat</artifactId>
+	</exclusion>
+  </exclusions>
+</dependency>
+
+<!-- 添加servlet依赖模块 -->
+<dependency>
+  <groupId>javax.servlet</groupId>
+  <artifactId>javax.servlet-api</artifactId>
+  <scope>provided</scope>
+</dependency>
+```
+启动类修改
+```java
+/**
+ * 启动类
+ * 打war包需要继承 SpringBootServletInitializer 重写 configure 方法
+ * @author KyrieCao
+ * @date 2020/3/14 11:04
+ */
+@Slf4j
+@SpringBootApplication
+public class Application extends SpringBootServletInitializer {
+
+    public static void main(String[] args) {
+        ApplicationContext context = SpringApplication.run(Application.class);
+        Environment env = context.getEnvironment();
+        log.info("====================================================================");
+        log.info("项目版本: {}", env.getProperty("project.version"));
+        log.info("启动环境: {}", env.getProperty("project.env"));
+        log.info("启动端口: {}", env.getProperty("server.port"));
+        log.info("日志等级: {}", env.getProperty("logback.level"));
+        log.info("日志Appender: {}", env.getProperty("logback.appender"));
+        log.info("Swagger: {}", Boolean.parseBoolean(env.getProperty("swagger.enabled")) ? "启用" : "禁用");
+        log.info("Startup complete ...");
+        log.info("====================================================================");
+    }
+
+    @Override
+    protected SpringApplicationBuilder configure(SpringApplicationBuilder builder) {
+        return builder.sources(Application.class);
+    }
+}
+```

@@ -2,92 +2,94 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-    <parent>
-        <groupId>com.codegen</groupId>
-        <artifactId>springboot-mult-modular-integration</artifactId>
-        <version>1.0.0-SNAPSHOT</version>
-    </parent>
-    <modelVersion>4.0.0</modelVersion>
+  <parent>
+    <groupId>com.codegen</groupId>
+    <artifactId>springboot-mult-modular-integration</artifactId>
+    <version>1.0.0-SNAPSHOT</version>
+  </parent>
+  <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>codegen-api</artifactId>
-    <version>${module.version}</version>
-    <name>project-api</name>
+  <artifactId>codegen-api</artifactId>
+  <version>${module.version}</version>
+  <name>project-api</name>
 
+  <!--打war包配置-->
+  <!--<packaging>war</packaging>-->
 
-    <dependencies>
+  <dependencies>
 
-        <!--依赖service模块-->
-        <dependency>
-            <groupId>com.codegen</groupId>
-            <artifactId>codegen-service</artifactId>
-        </dependency>
+    <!--依赖service模块-->
+    <dependency>
+      <groupId>com.codegen</groupId>
+      <artifactId>codegen-service</artifactId>
+    </dependency>
 
-        <!-- spring boot 核心 -->
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-web</artifactId>
-        </dependency>
-
-        <!-- Thymeleaf -->
-        <!--<dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-thymeleaf</artifactId>
-        </dependency>-->
-
-
-        <!-- JSP -->
-        <dependency>
-            <groupId>javax.servlet</groupId>
-            <artifactId>javax.servlet-api</artifactId>
-            <scope>provided</scope>
-        </dependency>
-        <!-- jstl标签库 -->
-        <dependency>
-            <groupId>javax.servlet</groupId>
-            <artifactId>jstl</artifactId>
-        </dependency>
-        <!-- 使用jsp引擎，springboot内置tomcat没有此依赖 -->
-        <dependency>
-            <groupId>org.apache.tomcat.embed</groupId>
-            <artifactId>tomcat-embed-jasper</artifactId>
-            <scope>provided</scope>
-        </dependency>
-
-    </dependencies>
-
-    <build>
-      <plugins>
-        <plugin>
+    <!-- spring boot 核心 -->
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-web</artifactId>
+      <!--打war包排队内置tomcat-->
+      <!--<exclusions>
+        <exclusion>
           <groupId>org.springframework.boot</groupId>
-          <artifactId>spring-boot-maven-plugin</artifactId>
-          <configuration>
-            <mainClass>com.codegen.ApiApplication</mainClass>
-          </configuration>
-        </plugin>
-      </plugins>
-      <resources>
-        <!-- 打包时将jsp文件拷贝到META-INF目录下-->
-        <resource>
-          <!-- 指定resources插件处理哪个目录下的资源文件 -->
-          <directory>src/main/webapp</directory>
-          <!-- 注意必须要放在此目录下才能被访问到-->
-          <targetPath>META-INF/resources</targetPath>
-        </resource>
-        <resource>
-          <directory>src/main/resources/public</directory>
-          <targetPath>META-INF/resources</targetPath>
-          <includes>
-            <include>**/**</include>
-          </includes>
-        </resource>
-        <resource>
-          <directory>src/main/resources</directory>
-          <includes>
-            <include>**/**</include>
-          </includes>
-          <filtering>false</filtering>
-        </resource>
-      </resources>
-    </build>
+          <artifactId>spring-boot-starter-tomcat</artifactId>
+        </exclusion>
+      </exclusions>-->
+    </dependency>
+
+    <!-- Thymeleaf -->
+    <!--<dependency>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-thymeleaf</artifactId>
+    </dependency>-->
+
+
+    <!-- JSP -->
+    <dependency>
+      <groupId>javax.servlet</groupId>
+      <artifactId>javax.servlet-api</artifactId>
+      <scope>provided</scope>
+    </dependency>
+    <!-- jstl标签库 -->
+    <dependency>
+      <groupId>javax.servlet</groupId>
+      <artifactId>jstl</artifactId>
+    </dependency>
+    <!-- 使用jsp引擎，springboot内置tomcat没有此依赖 -->
+    <dependency>
+      <groupId>org.apache.tomcat.embed</groupId>
+      <artifactId>tomcat-embed-jasper</artifactId>
+      <scope>provided</scope>
+    </dependency>
+
+  </dependencies>
+
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-maven-plugin</artifactId>
+        <configuration>
+          <mainClass>com.codegen.ApiApplication</mainClass>
+        </configuration>
+      </plugin>
+    </plugins>
+    <resources>
+      <!-- 打包时将jsp文件拷贝到META-INF目录下-->
+      <resource>
+        <!-- 指定resources插件处理哪个目录下的资源文件 -->
+        <directory>src/main/webapp</directory>
+        <!-- 注意必须要放在此目录下才能被访问到-->
+        <targetPath>META-INF/resources</targetPath>
+      </resource>
+      <resource>
+        <directory>src/main/resources</directory>
+        <includes>
+          <include>**/**</include>
+        </includes>
+        <filtering>false</filtering>
+      </resource>
+    </resources>
+  </build>
 
 </project>
