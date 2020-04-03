@@ -1,5 +1,6 @@
 package com.codegen.service.test.user;
 
+import com.codegen.core.model.PageData;
 import com.codegen.dao.user.model.User;
 import com.codegen.service.test.BaseTest;
 import com.codegen.service.user.UserService;
@@ -21,6 +22,13 @@ public class UserServiceTest extends BaseTest {
 
     @Autowired
     private UserService userService;
+
+    @Test
+    public void findPageTest() {
+        User user = new User();
+        user.setNickname("test");
+        print(userService.findPage(user, new PageData(1, 20), "id desc"));
+    }
 
     /**
      * 创建
