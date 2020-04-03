@@ -1,5 +1,6 @@
 package com.codegen.service.user;
 
+import com.codegen.core.model.PageData;
 import com.codegen.dao.user.model.User;
 import java.util.List;
 
@@ -9,6 +10,17 @@ import java.util.List;
  * @date 2020/3/14 11:21
  */
 public interface UserService {
+
+    /**
+     * 分页查询
+     * @param user              用户
+     * @param page              page对象
+     * @param orderByClause     排序
+     * @return PageData<User>
+     * @author KyrieCao
+     * @date 2020/4/3 22:42
+     */
+    PageData<User> findPage(User user, PageData page, String orderByClause);
 
     /**
      * 创建
